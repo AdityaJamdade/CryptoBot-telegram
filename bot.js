@@ -4,75 +4,70 @@ require('dotenv').config();
 
 // get bot token 
 const TOKEN = process.env.TOKEN;
+const apikey = process.env.CRYPTO_COMPARE_API_KEY;
 
 // constructor for create an instance of bot
 const bot = new Telegraf(TOKEN);
 
 // now bot is a telegraf object and can access all the bot methods
-
-bot.command(('test', ctx => {
-    bot.telegram.sendMessage(ctx.chat.id, 'Main Menu',
+bot.command('start', ctx => {
+    const chat_id = ctx.chat.id;
+    let startMessage = `Welcome, this bot is useful for getting the cryptocurrency information!`
+    bot.telegram.sendMessage(chat_id,  startMessage, 
         {
-            reply_markup: {
-                inline_keyboard: [
+            reply_markup:{
+                inline_keyboard:[
                     [
-                        { text: 'Fruits', callback_data: 'fruits' }
+                        {text:"Crypto Prices", callback_data:'price'}
                     ],
                     [
-                        { text: 'Vegetables', callback_data: 'vegetables' }
-                    ]
-                ]
-            }
-        })
-}))
-
-bot.action('fruits', ctx => {
-    const id = ctx.chat.id;
-    ctx.deleteMessage();
-    bot.telegram.sendMessage(id, `List of Fruits\n\n1.Apples\n2.Bananas`,
-        {
-            reply_markup: {
-                inline_keyboard: [
-                    [
-                        { text: 'Back to Menu', callback_data: 'menu' }
+                        {text:"CoinMarketCap", url: 'https://coinmarketcap.com/'}
                     ]
                 ]
             }
         })
 })
 
-bot.action('vegetables', ctx => {
-    const id = ctx.chat.id;
+bot.action('price', ctx => {
+    const chat_id = ctx.chat.id;
+    let priceMessage = `Get price Information! select any of the following cryptocurrencies.`;
     ctx.deleteMessage();
-    bot.telegram.sendMessage(id, `List of Vegetables\n\n1.Potatoes\n2.Lady Fingers`,
+    bot.telegram.sendMessage(chat_id, priceMessage, 
         {
-            reply_markup: {
-                inline_keyboard: [
+            reply_markup:{
+                inline_keyboard:[
                     [
-                        { text: 'Back to Menu', callback_data: 'menu' }
+                        {text:"BTC", callback_data:'price-BTC'},
+                        {text:"ETH", callback_data:'price-ETH'}
+                    ],
+                    [
+                        {text:"BCH", callback_data:'price-BCH'},
+                        {text:"LTC", callback_data:'price-LTC'}
+                    ],
+                    [
+                        {text:"Back to Menu", callback_data: 'start'}
                     ]
                 ]
-            }
+            } 
         })
 })
 
-bot.action('menu', ctx => {
-    const id = ctx.chat.id;
-    ctx.deleteMessage();
-    bot.telegram.sendMessage(ctx.chat.id, 'Main Menu',
+bot.action('start', ctx => {
+    const chat_id = ctx.chat.id;
+    let startMessage = `Welcome, this bot is useful for getting the cryptocurrency information!`
+    bot.telegram.sendMessage(chat_id,  startMessage, 
         {
-            reply_markup: {
-                inline_keyboard: [
+            reply_markup:{
+                inline_keyboard:[
                     [
-                        { text: 'Fruits', callback_data: 'fruits' }
+                        {text:"Crypto Prices", callback_data:'price'}
                     ],
                     [
-                        { text: 'Vegetables', callback_data: 'vegetables' }
+                        {text:"CoinMarketCap", url: 'https://coinmarketcap.com/'}
                     ]
                 ]
             }
         })
-
 })
 
 
