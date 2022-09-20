@@ -103,6 +103,31 @@ bot.action(priceActionList, async (ctx) => {
     }
 })
 
+bot.command('info', ctx => {
+    const chat_id = ctx.chat.id;
+    bot.telegram.sendMessage(chat_id, "Bot Info",
+        {
+            reply_markup: {
+                keyboard: [
+                    [
+                        { text: "credits" },
+                        { text: "API" }
+                    ],
+                    [
+
+                    ]
+                ]
+            }
+        })
+})
+
+bot.hears('credits', ctx => {
+    ctx.reply(`Developed by Aditya Jamdade, PICT, Pune!`);
+})
+
+bot.hears('API', ctx => {
+    ctx.reply(`This bot uses cryptocompare API`);
+})
 
 // command for launching the bot
 bot.launch();
