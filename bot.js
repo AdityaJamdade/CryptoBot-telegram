@@ -23,6 +23,9 @@ const sendStartMessage = (ctx) => {
                     ],
                     [
                         { text: "CoinMarketCap", url: 'https://coinmarketcap.com/' }
+                    ],
+                    [
+                        { text: "Bot Info", callback_data: 'info' }
                     ]
                 ]
             }
@@ -103,7 +106,8 @@ bot.action(priceActionList, async (ctx) => {
     }
 })
 
-bot.command('info', ctx => {
+bot.action('info', ctx => {
+    ctx.answerCbQuery();
     const chat_id = ctx.chat.id;
     bot.telegram.sendMessage(chat_id, "Bot Info",
         {
@@ -114,7 +118,7 @@ bot.command('info', ctx => {
                         { text: "API" }
                     ],
                     [
-
+                        { text: "Remove keyboard" }
                     ]
                 ]
             }
@@ -127,6 +131,15 @@ bot.hears('credits', ctx => {
 
 bot.hears('API', ctx => {
     ctx.reply(`This bot uses cryptocompare API`);
+})
+
+bot.hears('Remove keyboard', ctx => {
+    ctx.telegram.sendMessage(ctx.chat.id, "Removed keyboard!",
+        {
+            reply_markup: {
+                remove_keyboard: true
+            }
+        })
 })
 
 // command for launching the bot
