@@ -114,13 +114,14 @@ bot.action('info', ctx => {
             reply_markup: {
                 keyboard: [
                     [
-                        { text: "credits" },
+                        { text: "Credits" },
                         { text: "API" }
                     ],
                     [
                         { text: "Remove keyboard" }
                     ]
-                ]
+                ],
+                resize_keyboard: true
             }
         })
 })
